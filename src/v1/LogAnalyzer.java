@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -55,6 +57,7 @@ public class LogAnalyzer extends JFrame{
 		back = new JButton("Back");
 		edit = new JButton("Edit");
 		save = new JButton("Save");
+		save.setEnabled(false);
 		searchLabel = new JLabel("Search");
 		searchField = new JTextField();
 		Box buttonBox = Box.createHorizontalBox();
@@ -79,6 +82,7 @@ public class LogAnalyzer extends JFrame{
 		westPanel.add(Box.createRigidArea(new Dimension(0,425)));
 		westPanel.add(buttonPanel);
 		currentFrame.add(westPanel, BorderLayout.WEST);
+		addListeners();
 	}
 	
 	private void makeNorthPanel(){
@@ -101,6 +105,7 @@ public class LogAnalyzer extends JFrame{
 		centerPanel = new JPanel(new FlowLayout());
 		centerPanel.setBorder(BorderFactory.createLineBorder(new Color(0,65,205), 2, true));
 		logDisplay = new JTextPane();
+		logDisplay.setEditable(false);
 		logDisplay.setContentType("text/html");
 		logDisplay.setPreferredSize(new Dimension(500,500));
 		scrollPane = new JScrollPane(logDisplay);		
@@ -117,7 +122,21 @@ public class LogAnalyzer extends JFrame{
 			text += currentLine+"\n";
 		}
 		logDisplay.setText(text);
-
+	}
+	
+	private void addListeners(){
+		back.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				currentFrame.dispose();
+			}
+		});
+		
+		edit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				logDisplay.setEditable(true);
+				save.setEnabled(true);
+			}
+		});
 	}
 
 }
