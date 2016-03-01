@@ -4,11 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileNotFoundException;
+
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -143,7 +142,7 @@ public class LogAnalyzer extends JFrame{
 		
 		searchField.getDocument().addDocumentListener(new DocumentListener(){
 			public void changedUpdate(DocumentEvent e){
-				System.out.println("Selection Changed");
+				//System.out.println("Selection Changed");
 			}
 
 			@Override
