@@ -18,8 +18,15 @@ public class LogAnalyzer extends JFrame{
 	private JPanel northPanel;
 	private JPanel southPanel;
 	private JPanel centerPanel;
+	private JPanel buttonPanel;
+	private JPanel searchPanel;
 	private JLabel labelName;
 	private JLabel changingLabel;
+	private JLabel searchLabel;
+	private JTextField searchField;
+	private JButton back;
+	private JButton edit;
+	private JButton save;
 	private JTextPane logDisplay;
 	private JScrollPane scrollPane;
 	private JFrame currentFrame;
@@ -45,10 +52,32 @@ public class LogAnalyzer extends JFrame{
 	}
 	
 	private void makeWestPanel(){
+		back = new JButton("Back");
+		edit = new JButton("Edit");
+		save = new JButton("Save");
+		searchLabel = new JLabel("Search");
+		searchField = new JTextField();
+		Box buttonBox = Box.createHorizontalBox();
+		Box searchBox = Box.createHorizontalBox();
+		buttonBox.add(back);
+		buttonBox.add(edit);
+		buttonBox.add(save);
+		searchBox.add(searchLabel);
+		searchBox.add(searchField);
+		
+		searchPanel = new JPanel();
+		searchPanel.setLayout(new FlowLayout());
+		buttonPanel = new JPanel();
+		searchPanel.add(searchBox);
+		buttonPanel.add(buttonBox);
 		westPanel = new JPanel();
 		westPanel.setLayout(new BoxLayout(westPanel,BoxLayout.Y_AXIS));
 		westPanel.setPreferredSize(new Dimension(250, currentFrame.getHeight()));
 		westPanel.setBorder(BorderFactory.createLineBorder(new Color(0,45,255), 2, true));
+		westPanel.add(Box.createRigidArea(new Dimension(0,25)));
+		westPanel.add(searchBox);
+		westPanel.add(Box.createRigidArea(new Dimension(0,425)));
+		westPanel.add(buttonPanel);
 		currentFrame.add(westPanel, BorderLayout.WEST);
 	}
 	
