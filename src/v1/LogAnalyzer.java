@@ -11,6 +11,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -135,6 +138,24 @@ public class LogAnalyzer extends JFrame{
 			public void actionPerformed(ActionEvent e){
 				logDisplay.setEditable(true);
 				save.setEnabled(true);
+			}
+		});
+		
+		searchField.getDocument().addDocumentListener(new DocumentListener(){
+			public void changedUpdate(DocumentEvent e){
+				System.out.println("Selection Changed");
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				System.out.println("Selection Changed");
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				System.out.println("Selection Changed");
+				
 			}
 		});
 	}
