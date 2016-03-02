@@ -3,6 +3,8 @@ package v1;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.text.BadLocationException;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -207,6 +209,9 @@ public class HomeWindowMainPanel extends JPanel implements Serializable {
 							try {
 								LogAnalyzer logScreen = new LogAnalyzer(parentFrame, (Business)currentSelection);
 							} catch (IOException e1) {							
+								e1.printStackTrace();
+							} catch (BadLocationException e1) {
+								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}		
 						}
