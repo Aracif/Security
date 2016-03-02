@@ -7,22 +7,25 @@ public class Business implements Serializable {
 	private ArrayList<Room> rooms;
 	private String name;
 	private File logFile;
+	private File parseableLogFile;
 	
 	public Business(String name){
 		rooms = new ArrayList<Room>();
 		this.name = name;
 	}
 	
-	public Business(String name,File log){
+	public Business(String name,File log, File pLog){
 		rooms = new ArrayList<Room>();
 		this.name = name;
 		logFile = log;
+		parseableLogFile = pLog;
 	}
 	
-	public Business(String name, ArrayList<Room> rooms, File log){
+	public Business(String name, ArrayList<Room> rooms, File log, File pLog){
 		this.rooms = rooms;
 		this.name = name;
 		logFile = log;
+		parseableLogFile = pLog;
 	}
 
 	public ArrayList<Room> getRooms() {
@@ -51,6 +54,14 @@ public class Business implements Serializable {
 	
 	public File getFile(){
 		return logFile;
+	}
+	
+	public void setParseableLogFile(File f){
+		parseableLogFile = f;
+	}
+	
+	public File getParseableLogFile(){
+		return parseableLogFile;
 	}
 	
 	
