@@ -113,8 +113,7 @@ public class SystemConstructionPanelJList extends JPanel {
 		});
 		//BACK BUTTON
 		backButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				System.out.println(topFrame);
+			public void actionPerformed(ActionEvent e){				
 				topFrame.dispose();				
 			}
 		});
@@ -140,7 +139,7 @@ public class SystemConstructionPanelJList extends JPanel {
 				
 				//Write info to the log file about this rooms creation
 				try{
-					String writeString ="<br><br><b>*ROOM CREATION*</b>";
+					String writeString ="\n<br><br><b>*ROOM CREATION*</b>\n";
 					writeString += "<br><b>Room Name : </b>" + newRoom.getRoomName();
 					writeString += "<br><b>Risk Level : </b>" + newRoom.getRiskLevel();
 					writeString += "<br><b>Alarms : </b>" + InformationDisplay.getAlarmNames(alarms);

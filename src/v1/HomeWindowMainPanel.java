@@ -149,12 +149,16 @@ public class HomeWindowMainPanel extends JPanel implements Serializable {
 				model.addElement(busi);
 				try{				
 					PrintWriter write = new PrintWriter(busi.getName() + ".SecurityLog"); 									//Create a PrintWriter in the current dir. with the specified String as the file name
+					PrintWriter writeParseable = new PrintWriter(busi.getName() + ".SecurityLogParser" ); 
 					write.write("<b style=\"font:20;\">SECURITY LOG</b>" + " for " + "<span style=\"font:16;color:	rgb(255,165,0);text-decoration:underline;\">" + 
 					busi.getName()+"</span>");										//Write first line to log file
 					write.close();																							//close log file
 					String businessLogFileString = System.getProperty("user.dir") + "\\" +busi.getName() +  ".SecurityLog"; //Get the path to this newly created log file
 					File businessLogFileFile = new File(businessLogFileString);												//Create a file object out of path
+					String logParseFileString = System.getProperty("user.dir") + "\\" + busi.getName() + ".SecurityLogParser" ;
+					File logParseFile = new File(logParseFileString);
 					busi.setLogFile(businessLogFileFile);																	//Set it as the log file for newly created Business	
+					busi.setParseableLogFile(logParseFile);
 				}
 				catch(FileNotFoundException k){
 					System.out.println(k);
