@@ -2,3 +2,4 @@
 *.txt
 /.settings
 /bin
+*.SecurityLog
