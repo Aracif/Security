@@ -7,7 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-
+import java.io.FileNotFoundException;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -16,6 +16,7 @@ import javax.swing.event.DocumentListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class LogAnalyzer extends JFrame{
 	private JPanel westPanel;
@@ -36,6 +37,7 @@ public class LogAnalyzer extends JFrame{
 	private JFrame currentFrame;
 	private Business currentBusiness;
 	private File currentLogFile;
+	private BufferedReader read;
 	
 	public LogAnalyzer(JFrame parentFrame, Business cB) throws IOException{
 		this.getContentPane().setLayout(new BorderLayout());
@@ -46,11 +48,14 @@ public class LogAnalyzer extends JFrame{
 		makeCenterPanel();
 		currentFrame.setPreferredSize(new Dimension(800, 600));
 		currentBusiness = cB;
-		readInFile(currentBusiness.getFile());
+		currentLogFile = currentBusiness.getFile();
+		read = new BufferedReader(new FileReader(currentLogFile));	
+		readInFile();
 		this.setLocation(parentFrame.getLocation());
 		if(logDisplay.getText()!=""){
 			changingLabel.setText(currentBusiness.getName() + " log file has been successfully loaded.");
 		}
+		
 		this.pack();
 		this.setVisible(true);
 	}
@@ -116,8 +121,7 @@ public class LogAnalyzer extends JFrame{
 		currentFrame.add(centerPanel,BorderLayout.CENTER);
 	}
 	
-	private void readInFile(File logFile) throws IOException{
-		BufferedReader read = new BufferedReader(new FileReader(logFile));
+	private void readInFile() throws IOException{	
 		String currentLine;
 		String text = "";
 		while((currentLine=read.readLine())!=null){
@@ -142,18 +146,40 @@ public class LogAnalyzer extends JFrame{
 		
 		searchField.getDocument().addDocumentListener(new DocumentListener(){
 			public void changedUpdate(DocumentEvent e){
-				//System.out.println("Selection Changed");
-			}
+				
+		
+				}
 
 			@Override
 			public void insertUpdate(DocumentEvent arg0) {
-				System.out.println("Selection Changed");
-				
+				String logText = logDisplay.getText();
+				File logf = new File(logText);
+				String searchText = searchField.getText();
+				System.out.println(logText);
+				try{
+				BufferedReader search = new BufferedReader(new FileReader(currentLogFile));
+				String currentLine;
+				int line = 0;
+					while((currentLine=search.readLine())!=null){			
+						if(currentLine.contains(searchText)){
+							//System.out.println("Found on line " + line);
+							//System.out.println("Text Index : " + currentLine.indexOf(searchText));
+						}
+						System.out.println("line " + line);
+						line++;
+					}
+				} catch (FileNotFoundException s) {
+					// TODO Auto-generated catch block
+					s.printStackTrace();
+				}
+				catch(IOException f){
+					
+				}
+			
 			}
 
 			@Override
 			public void removeUpdate(DocumentEvent arg0) {
-				System.out.println("Selection Changed");
 				
 			}
 		});
