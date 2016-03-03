@@ -132,7 +132,6 @@ public class HomeWindowMainPanel extends JPanel implements Serializable {
 					ObjectOutputStream outObj = new ObjectOutputStream(out);				
 					outObj.writeObject(list5.getModel());
 					outObj.close();
-					System.out.println("SAVED.");
 				}
 				catch(FileNotFoundException r){
 					System.out.println(r);
