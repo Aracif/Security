@@ -173,6 +173,9 @@ public class LogAnalyzer extends JFrame{
 		sb.append("<b>Leafs : </b> " + getWordCount() + "<br>");
 		sb.append("<b>Occurences : </b> " + occurences + "<br>");
 		sb.append("<b>Tripped Alarms : </b><br>");
+		sb.append("<b>Number of Rooms : </b><br>");
+		sb.append("<b>Last Alarm Triggered : </b><br>");
+		sb.append("<b>Alarms Currently Triggered : </b><br>");
 		sb.append("<b>Last edit : </b><br>");
 		logStats.setText(sb.toString());
 	}
