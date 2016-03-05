@@ -62,6 +62,7 @@ public class LogAnalyzer extends JFrame{
 	private int leafValue;
 	private JTextPane logStats;
 	private int occurences;
+	private String originalDocText;
 
 
 	public LogAnalyzer(JFrame parentFrame, Business cB) throws IOException, BadLocationException{
@@ -86,6 +87,7 @@ public class LogAnalyzer extends JFrame{
 			changingLabel.setText(currentBusiness.getName() + " log file has been successfully loaded.");
 		}
 		getWordCount();
+		originalDocText = logDisplay.getDocument().getText(0, logDisplay.getDocument().getLength());
 		this.pack();
 		this.setVisible(true);
 	}
@@ -96,6 +98,7 @@ public class LogAnalyzer extends JFrame{
 		edit = new JButton("Edit");
 		save = new JButton("Save");
 		save.setEnabled(false);
+		save.addActionListener(saveButton);
 		searchLabel = new JLabel("Search");
 		searchField = new JTextField(15);
 		Box buttonBox = Box.createHorizontalBox();
@@ -182,6 +185,7 @@ public class LogAnalyzer extends JFrame{
 		occurences = i;
 	}
 
+	//Get the number of words in the log
 	private int getWordCount() throws BadLocationException{
 		String logText = logDisplay.getText();
 		int spaces = 0;
@@ -246,11 +250,31 @@ public class LogAnalyzer extends JFrame{
 		}
 	}
 
-
+	//Create the action to be performed when the back button is clicked
 	ActionListener backButtonAction = new ActionListener(){
 		@Override
 		public void actionPerformed(ActionEvent e){
 			currentFrame.dispose();
+		}
+	};
+	
+	//Create the action to be performed when the save button is clicked
+	ActionListener saveButton = new ActionListener(){
+		@Override
+		public void actionPerformed(ActionEvent e){
+			try {
+				String currentDocText = logDisplay.getDocument().getText(0, logDisplay.getDocument().getLength());
+				if(currentDocText.equals(originalDocText)){
+					JOptionPane.showMessageDialog(currentFrame, "No changes have been made.");
+				}
+				else{
+					int choice = JOptionPane.showConfirmDialog(currentFrame, "Are you sure you want to save these changes?");
+					System.out.println(choice + "");
+				}
+			} catch (BadLocationException e1) {
+				e1.printStackTrace();
+			}
+			
 		}
 	};
 	
