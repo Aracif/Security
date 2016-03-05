@@ -121,8 +121,8 @@ public class HomeWindowMainPanel extends JPanel implements Serializable {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					JList list5 = (JList) comp[0];
-					JOptionPane fileName = new JOptionPane();
-					String fileN = fileName.showInputDialog(parentFrame, "Enter a name to save your file as",
+					//JOptionPane fileName = new JOptionPane();
+					String fileN = JOptionPane.showInputDialog(parentFrame, "Enter a name to save your file as",
 							"Save File As", JOptionPane.PLAIN_MESSAGE);
 					FileOutputStream out = new FileOutputStream(fileN + ".BusinessNetwork");
 					ObjectOutputStream outObj = new ObjectOutputStream(out);
@@ -143,43 +143,22 @@ public class HomeWindowMainPanel extends JPanel implements Serializable {
 				Business busi = new Business(text.getText());
 				model.addElement(busi);
 				try {
-					PrintWriter write = new PrintWriter(busi.getName() + ".SecurityLog"); // Create
-																							// a
-																							// PrintWriter
-																							// in
-																							// the
-																							// current
-																							// dir.
-																							// with
-																							// the
-																							// specified
-																							// String
-																							// as
-																							// the
-																							// file
-																							// name
+					PrintWriter write = new PrintWriter(busi.getName() + ".SecurityLog");
 					PrintWriter writeParseable = new PrintWriter(busi.getName() + ".SecurityLogParser");
 					write.write("<b style=\"font:20;\">SECURITY LOG</b>" + " for "
 							+ "<span style=\"font:16;color:	rgb(255,165,0);text-decoration:underline;\">"
-							+ busi.getName() + "</span>"); // Write first line
-															// to log file
-					write.close(); // close log file
+							+ busi.getName() + "</span>"); 
+															
+					write.close();
 					String businessLogFileString = System.getProperty("user.dir") + "\\" + busi.getName()
-							+ ".SecurityLog"; // Get the path to this newly
-												// created log file
-					File businessLogFileFile = new File(businessLogFileString); // Create
-																				// a
-																				// file
-																				// object
-																				// out
-																				// of
-																				// path
+							+ ".SecurityLog"; 
+												
+					File businessLogFileFile = new File(businessLogFileString); 
 					String logParseFileString = System.getProperty("user.dir") + "\\" + busi.getName()
 							+ ".SecurityLogParser";
 					File logParseFile = new File(logParseFileString);
-					busi.setLogFile(businessLogFileFile); // Set it as the log
-															// file for newly
-															// created Business
+					busi.setLogFile(businessLogFileFile); 
+
 					busi.setParseableLogFile(logParseFile);
 				} catch (FileNotFoundException k) {
 					System.out.println(k);

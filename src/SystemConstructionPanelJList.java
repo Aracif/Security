@@ -40,52 +40,27 @@ public class SystemConstructionPanelJList extends JPanel {
 		alarmsPanel = alarms; // reference to alarm panel
 		currentBusiness = bus; // current business object
 
-		blackline = BorderFactory.createLineBorder(Color.decode("#00BFFF")); // next
-																				// 2
-																				// lines
-																				// create
-																				// border
-																				// and
-																				// apply
-																				// border
+		blackline = BorderFactory.createLineBorder(Color.decode("#00BFFF")); 
+
 		this.setBorder(BorderFactory.createTitledBorder(blackline, "Room List"));//
 
 		makeJList(); // Construct the JList panel
 
-		JViewport consolePane = (JViewport) ((JScrollPane) conPanel.getPanel().getComponent(0)).getViewport(); // Reference
-																												// to
-																												// the
-																												// console
-																												// viewport
-		consoleTextArea = (JTextPane) consolePane.getView(); // Reference to
-																// console area
-																// viewport
-		addRoomTextInput = (JTextField) inPanel.getComponent(0); // Reference to
-																	// JTextfield
-																	// for room
-																	// name
-		listPane = (JScrollPane) this.getComponent(0); // Reference to
-														// JScrolPane containing
-														// list
-		list = (JList<Room>) listPane.getViewport().getComponent(0); // Reference
-																		// to
-																		// JList
-																		// inside
-																		// JScrollPane
-		listModel = (DefaultListModel<Room>) list.getModel(); // Reference to
-																// the JList
-																// model
-		JPanel buttonPanel = (JPanel) this.getComponent(1); // Reference to
-															// JPanel containing
-															// the JButtons
-		createRoomButton = (JButton) buttonPanel.getComponent(0); // Reference
-																	// to the
-																	// create
-																	// JButton
+		JViewport consolePane = (JViewport) ((JScrollPane) conPanel.getPanel().getComponent(0)).getViewport(); 
+		consoleTextArea = (JTextPane) consolePane.getView();						
+		addRoomTextInput = (JTextField) inPanel.getComponent(0); 
+
+		listPane = (JScrollPane) this.getComponent(0); 
+
+		list = (JList<Room>) listPane.getViewport().getComponent(0); 
+	
+		listModel = (DefaultListModel<Room>) list.getModel(); 
+	
+		JPanel buttonPanel = (JPanel) this.getComponent(1); 
+		createRoomButton = (JButton) buttonPanel.getComponent(0); 
+
 		deleteRoomButton = (JButton) buttonPanel.getComponent(1); // Reference
-																	// to the
-																	// delete
-																	// JButton
+
 		backButton = (JButton) buttonPanel.getComponent(3); // Reference to the
 															// back JButton
 		editRoomButton = (JButton) buttonPanel.getComponent(2); // Reference to
@@ -151,26 +126,11 @@ public class SystemConstructionPanelJList extends JPanel {
 		// ADD ROOM BUTTON
 		createRoomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Alarm[] alarms = createSelectedAlarmsArray(); // Get an Alarm[]
-																// array
-																// containing
-																// the selected
-																// alarms
-				String riskLevel = createRiskStringFromPanel(); // Get risk
-																// level
-				Room newRoom = new Room(addRoomTextInput.getText(), alarms, riskLevel); // Create
-																						// room
-																						// using
-																						// alarms,riskLevel
-																						// and
-																						// room
-																						// in.
-																						// field
-				currentBusiness.getRooms().add(newRoom); // Add new room to
-															// business
-				listModel.addElement(newRoom); // Add new room to the list model
-
-				// Display creation status into console
+				Alarm[] alarms = createSelectedAlarmsArray(); 
+				String riskLevel = createRiskStringFromPanel();
+				Room newRoom = new Room(addRoomTextInput.getText(), alarms, riskLevel); 
+				currentBusiness.getRooms().add(newRoom); 													
+				listModel.addElement(newRoom); 
 				String statusText = "";
 
 				statusText += "<html><p><b>ROOM : </b>" + newRoom.getRoomName() + "</p>";

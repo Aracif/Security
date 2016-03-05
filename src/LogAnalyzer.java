@@ -62,6 +62,7 @@ public class LogAnalyzer extends JFrame {
 	private JTextPane logStats;
 	private int occurences;
 	private String originalDocText;
+	private String originalRegText;
 
 	public LogAnalyzer(JFrame parentFrame, Business cB) throws IOException, BadLocationException {
 		this.getContentPane().setLayout(new BorderLayout());
@@ -86,6 +87,7 @@ public class LogAnalyzer extends JFrame {
 		}
 		getWordCount();
 		originalDocText = logDisplay.getDocument().getText(0, logDisplay.getDocument().getLength());
+		originalRegText = logDisplay.getText();
 		this.pack();
 		this.setVisible(true);
 	}
@@ -173,11 +175,11 @@ public class LogAnalyzer extends JFrame {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<b>Leafs : </b> " + getWordCount() + "<br>");
 		sb.append("<b>Occurences : </b> " + occurences + "<br>");
-		sb.append("<b>Tripped Alarms : </b><br>");
-		sb.append("<b>Number of Rooms : </b><br>");
+		sb.append("<b>Tripped Alarms : </b> <br>");
+		sb.append("<b>Number of Rooms : </b>" + currentBusiness.getRooms().size()+"<br>");
 		sb.append("<b>Last Alarm Triggered : </b><br>");
 		sb.append("<b>Alarms Currently Triggered : </b><br>");
-		sb.append("<b>Last edit : </b><br>");
+		sb.append("<b>Last edit : </b>" + currentBusiness.getLastEdit()+"<br>");
 		logStats.setText(sb.toString());
 	}
 
@@ -271,15 +273,26 @@ public class LogAnalyzer extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				String currentDocText = logDisplay.getDocument().getText(0, logDisplay.getDocument().getLength());
-				if (currentDocText.equals(originalDocText)) {
+				String currentDocText = logDisplay.getText();
+				if (currentDocText.equals(originalRegText)) {
 					JOptionPane.showMessageDialog(currentFrame, "No changes have been made.");
 				} else {
 					int choice = JOptionPane.showConfirmDialog(currentFrame,
 							"Are you sure you want to save these changes?");
 					System.out.println(choice + "");
+					if(choice==0){
+						PrintWriter pw = new PrintWriter(currentBusiness.getFile().getAbsolutePath());
+						File updateTextFile = new File(currentBusiness.getFile().getAbsolutePath());
+						currentBusiness.setLogFile(updateTextFile);
+						pw.write(currentDocText);
+						pw.close();
+						currentBusiness.setLastEdit(InformationDisplay.dateOfCreationFormatted() + " @ " + 
+						InformationDisplay.timeOfCreationFormatted());
+						logStat();
+						
+					}
 				}
-			} catch (BadLocationException e1) {
+			} catch (  FileNotFoundException | BadLocationException e1) {
 				e1.printStackTrace();
 			}
 
