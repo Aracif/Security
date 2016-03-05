@@ -1,4 +1,5 @@
-package v1;
+package src;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -12,37 +13,41 @@ public class Room implements Serializable {
 	private Alarm[] alarms;
 	private String roomName;
 	private String riskLevel;
-	public Room(String name){
+
+	public Room(String name) {
 		alarms = new Alarm[7];
 		roomName = name;
 		riskLevel = "None";
-		
-		
+
 	}
-	
-	public Room(String name, Alarm[] alarms, String risk){
+
+	public Room(String name, Alarm[] alarms, String risk) {
 		this.roomName = name;
 		this.alarms = alarms;
 		this.riskLevel = risk;
 	}
+
 	protected Alarm[] getAlarms() {
 		return alarms;
 	}
+
 	protected void setAlarms(Alarm[] alarms) {
 		this.alarms = alarms;
 	}
+
 	protected String getRoomName() {
 		return roomName;
 	}
+
 	protected void setRoomName(String roomName) {
 		this.roomName = roomName;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return roomName + "(" + riskLevel + ")";
 	}
-	
-	public String getRiskLevel(){
+
+	public String getRiskLevel() {
 		return riskLevel;
 	}
 

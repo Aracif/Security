@@ -1,4 +1,4 @@
-package v1;
+package src;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -34,8 +34,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-
-public class LogAnalyzer extends JFrame{
+public class LogAnalyzer extends JFrame {
 	private JPanel westPanel;
 	private JPanel northPanel;
 	private JPanel southPanel;
@@ -62,9 +61,9 @@ public class LogAnalyzer extends JFrame{
 	private int leafValue;
 	private JTextPane logStats;
 	private int occurences;
+	private String originalDocText;
 
-
-	public LogAnalyzer(JFrame parentFrame, Business cB) throws IOException, BadLocationException{
+	public LogAnalyzer(JFrame parentFrame, Business cB) throws IOException, BadLocationException {
 		this.getContentPane().setLayout(new BorderLayout());
 		occurences = 0;
 		currentFrame = this;
@@ -82,25 +81,27 @@ public class LogAnalyzer extends JFrame{
 		this.setLocation(parentFrame.getLocation());
 		parseJPane();
 		logStat();
-		if(logDisplay.getText()!=""){
+		if (logDisplay.getText() != "") {
 			changingLabel.setText(currentBusiness.getName() + " log file has been successfully loaded.");
 		}
 		getWordCount();
+		originalDocText = logDisplay.getDocument().getText(0, logDisplay.getDocument().getLength());
 		this.pack();
 		this.setVisible(true);
 	}
 
-	private void makeWestPanel(){
+	private void makeWestPanel() {
 		back = new JButton("Back");
 		back.addActionListener(backButtonAction);
 		edit = new JButton("Edit");
 		save = new JButton("Save");
 		save.setEnabled(false);
+		save.addActionListener(saveButton);
 		searchLabel = new JLabel("Search");
 		searchField = new JTextField(15);
 		Box buttonBox = Box.createHorizontalBox();
 		Box searchBox = Box.createHorizontalBox();
-		
+
 		buttonBox.add(back);
 		buttonBox.add(edit);
 		buttonBox.add(save);
@@ -115,60 +116,60 @@ public class LogAnalyzer extends JFrame{
 		logStats = new JTextPane();
 		JScrollPane statsScrollPane = new JScrollPane(logStats);
 		logStats.setContentType("text/html");
-		westPanel.setLayout(new BoxLayout(westPanel,BoxLayout.Y_AXIS));
+		westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
 		westPanel.setPreferredSize(new Dimension(250, currentFrame.getHeight()));
-		westPanel.setBorder(BorderFactory.createLineBorder(new Color(0,45,255), 2, true));
-		//westPanel.add(Box.createRigidArea(new Dimension(0,125)));
+		westPanel.setBorder(BorderFactory.createLineBorder(new Color(0, 45, 255), 2, true));
+		// westPanel.add(Box.createRigidArea(new Dimension(0,125)));
 		westPanel.add(searchPanel);
-		westPanel.add(Box.createRigidArea(new Dimension(0,25)));
+		westPanel.add(Box.createRigidArea(new Dimension(0, 25)));
 		westPanel.add(statsScrollPane);
-		westPanel.add(Box.createRigidArea(new Dimension(0,25)));
+		westPanel.add(Box.createRigidArea(new Dimension(0, 25)));
 		westPanel.add(buttonPanel);
 		currentFrame.add(westPanel, BorderLayout.WEST);
 		addListeners();
 	}
 
-	private void makeNorthPanel(){
+	private void makeNorthPanel() {
 		northPanel = new JPanel(new FlowLayout());
-		northPanel.setBorder(BorderFactory.createLineBorder(new Color(0,45,235), 2, true));		
+		northPanel.setBorder(BorderFactory.createLineBorder(new Color(0, 45, 235), 2, true));
 		currentFrame.add(northPanel, BorderLayout.NORTH);
 	}
 
-	private void makeSouthPanel(){
+	private void makeSouthPanel() {
 		southPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		labelName = new JLabel("Status/Info: ");
 		changingLabel = new JLabel("");
 		southPanel.add(labelName);
 		southPanel.add(changingLabel);
-		southPanel.setBorder(BorderFactory.createLineBorder(new Color(0,65,205), 2, true));
-		currentFrame.add(southPanel,BorderLayout.SOUTH);
+		southPanel.setBorder(BorderFactory.createLineBorder(new Color(0, 65, 205), 2, true));
+		currentFrame.add(southPanel, BorderLayout.SOUTH);
 	}
 
-	private void makeCenterPanel(){
+	private void makeCenterPanel() {
 		centerPanel = new JPanel(new FlowLayout());
-		centerPanel.setBorder(BorderFactory.createLineBorder(new Color(0,65,205), 2, true));
+		centerPanel.setBorder(BorderFactory.createLineBorder(new Color(0, 65, 205), 2, true));
 		logDisplay = new JTextPane();
 		logDisplay.setEditable(false);
 		logDisplay.setContentType("text/html");
-		logDisplay.setPreferredSize(new Dimension(500,500));
-		scrollPane = new JScrollPane(logDisplay);		
+		logDisplay.setPreferredSize(new Dimension(500, 500));
+		scrollPane = new JScrollPane(logDisplay);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		centerPanel.add(scrollPane);
-		currentFrame.add(centerPanel,BorderLayout.CENTER);
+		currentFrame.add(centerPanel, BorderLayout.CENTER);
 	}
 
-	//Read the html based log display into the JTextPane 
-	private void readInFile() throws IOException{	
+	// Read the html based log display into the JTextPane
+	private void readInFile() throws IOException {
 		String currentLine;
 		String text = "";
-		while((currentLine=read.readLine())!=null){
-			text += currentLine+"\n";
+		while ((currentLine = read.readLine()) != null) {
+			text += currentLine + "\n";
 		}
 		logDisplay.setText(text);
 	}
-	
-	//Log stats
-	private void logStat() throws BadLocationException{
+
+	// Log stats
+	private void logStat() throws BadLocationException {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<b>Leafs : </b> " + getWordCount() + "<br>");
 		sb.append("<b>Occurences : </b> " + occurences + "<br>");
@@ -179,59 +180,68 @@ public class LogAnalyzer extends JFrame{
 		sb.append("<b>Last edit : </b><br>");
 		logStats.setText(sb.toString());
 	}
-	
-	//Set occurences
-	private void setOccur(int i){
+
+	// Set occurences
+	private void setOccur(int i) {
 		occurences = i;
 	}
 
-	private int getWordCount() throws BadLocationException{
+	private int getWordCount() throws BadLocationException {
 		String logText = logDisplay.getText();
 		int spaces = 0;
-		DefaultStyledDocument doc = (DefaultStyledDocument)logDisplay.getDocument();
+		DefaultStyledDocument doc = (DefaultStyledDocument) logDisplay.getDocument();
 		String docContext = doc.getText(0, doc.getLength());
 		String[] arr = docContext.split("\\s");
-		for(int i = 0; i<arr.length; i++){
-			if(arr[i].equals("")){
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i].equals("")) {
 				spaces++;
 			}
 		}
-		return arr.length-spaces;
+		return arr.length - spaces;
 	}
-	
-	//The original log file is formatted using html, thus in order to get a regularly formatted document
-	//containing plain text only and formatted with words,lines,spaces etc in their proper positions we 
-	//must parse through the html to find the text by checking if it is a leaf element in other words if
-	//the element represents text i.e. doesn't have any children. Now, in order, this method works as follows
-	//1. Create a PrintWriter so we can write the parsed text into a file.
-	//2. Get the currently displayed text in the JTextPane
-	//3. Since we need to make an HTML document we first create an HTMLEditorKit which provides a method for this.
-	//4. Now we can use the HTMLEditorKit method .createDefaultDocument to create the document model for this editor
-	//5. We are now ready to read our JTextPane text into our HtmlEditorKit which stores it in the HTMLDocument we created for it
-	//6. The final step before iteration is to create an element iterator which detects html elements in the Document model.
-	private void parseJPane() throws IOException{
-		PrintWriter writeParseableSecurityLog = new PrintWriter(new BufferedWriter(new FileWriter(currentBusiness.getParseableLogFile(),false)));
+
+	// The original log file is formatted using html, thus in order to get a
+	// regularly formatted document
+	// containing plain text only and formatted with words,lines,spaces etc in
+	// their proper positions we
+	// must parse through the html to find the text by checking if it is a leaf
+	// element in other words if
+	// the element represents text i.e. doesn't have any children. Now, in
+	// order, this method works as follows
+	// 1. Create a PrintWriter so we can write the parsed text into a file.
+	// 2. Get the currently displayed text in the JTextPane
+	// 3. Since we need to make an HTML document we first create an
+	// HTMLEditorKit which provides a method for this.
+	// 4. Now we can use the HTMLEditorKit method .createDefaultDocument to
+	// create the document model for this editor
+	// 5. We are now ready to read our JTextPane text into our HtmlEditorKit
+	// which stores it in the HTMLDocument we created for it
+	// 6. The final step before iteration is to create an element iterator which
+	// detects html elements in the Document model.
+	private void parseJPane() throws IOException {
+		PrintWriter writeParseableSecurityLog = new PrintWriter(
+				new BufferedWriter(new FileWriter(currentBusiness.getParseableLogFile(), false)));
 		String logText = logDisplay.getText();
 		HTMLEditorKit htmlKit = new HTMLEditorKit();
-		HTMLDocument htmlDoc = (HTMLDocument)htmlKit.createDefaultDocument();
+		HTMLDocument htmlDoc = (HTMLDocument) htmlKit.createDefaultDocument();
 		int leafNumber = 0;
 		try {
 			htmlKit.read(new StringReader(logText), htmlDoc, 0);
-			ElementIterator iterator = new ElementIterator(htmlDoc);	
+			ElementIterator iterator = new ElementIterator(htmlDoc);
 			Element element;
 			int i = 0;
-			while((element=iterator.next())!=null){	
-				if(element.isLeaf()){
-					leafNumber ++;
-					int startOffset =element.getStartOffset();
+			while ((element = iterator.next()) != null) {
+				if (element.isLeaf()) {
+					leafNumber++;
+					int startOffset = element.getStartOffset();
 					int endOffset = element.getEndOffset();
-					int length = endOffset -startOffset;
+					int length = endOffset - startOffset;
 					String t = htmlDoc.getText(startOffset, length);
-					if(leafNumber>1){
+					if (leafNumber > 1) {
 						writeParseableSecurityLog.write(htmlDoc.getText(startOffset, length));
 						AttributeSet checkAtt = element.getAttributes();
 						Object name = checkAtt.getAttribute(StyleConstants.NameAttribute);
-						if(name==HTML.Tag.BR){
+						if (name == HTML.Tag.BR) {
 							writeParseableSecurityLog.write("\n");
 						}
 					}
@@ -249,53 +259,68 @@ public class LogAnalyzer extends JFrame{
 		}
 	}
 
-
-	ActionListener backButtonAction = new ActionListener(){
+	ActionListener backButtonAction = new ActionListener() {
 		@Override
-		public void actionPerformed(ActionEvent e){
+		public void actionPerformed(ActionEvent e) {
 			currentFrame.dispose();
 		}
 	};
-	
-	private void addListeners(){
 
+	// Create the action to be performed when the save button is clicked
+	ActionListener saveButton = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				String currentDocText = logDisplay.getDocument().getText(0, logDisplay.getDocument().getLength());
+				if (currentDocText.equals(originalDocText)) {
+					JOptionPane.showMessageDialog(currentFrame, "No changes have been made.");
+				} else {
+					int choice = JOptionPane.showConfirmDialog(currentFrame,
+							"Are you sure you want to save these changes?");
+					System.out.println(choice + "");
+				}
+			} catch (BadLocationException e1) {
+				e1.printStackTrace();
+			}
 
-		edit.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
+		}
+	};
+
+	private void addListeners() {
+
+		edit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				logDisplay.setEditable(true);
 				save.setEnabled(true);
 			}
 		});
 
-		searchField.getDocument().addDocumentListener(new DocumentListener(){
-			public void changedUpdate(DocumentEvent e){
-
+		searchField.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
 
 			}
 
 			@Override
-			public void insertUpdate(DocumentEvent arg0) {				
+			public void insertUpdate(DocumentEvent arg0) {
 				DefaultHighlighter highlighter = (DefaultHighlighter) logDisplay.getHighlighter();
-				highlighter.removeAllHighlights();				
-				DefaultStyledDocument doc = (DefaultStyledDocument)logDisplay.getDocument();
-				try{
+				highlighter.removeAllHighlights();
+				DefaultStyledDocument doc = (DefaultStyledDocument) logDisplay.getDocument();
+				try {
 					context = doc.getText(0, doc.getLength());
-				}
-				catch (BadLocationException ex) {
+				} catch (BadLocationException ex) {
 					System.out.println(ex);
 				}
-				int index =0;
+				int index = 0;
 				occurences = 0;
 				int wordLength = searchField.getText().length();
-				while((index = context.indexOf(searchField.getText(), index))!= -1){
+				while ((index = context.indexOf(searchField.getText(), index)) != -1) {
 					int endIndex = index + wordLength;
-					try{
-						if(searchField.getText().equals(context.substring(index, endIndex))){
+					try {
+						if (searchField.getText().equals(context.substring(index, endIndex))) {
 							highlighter.addHighlight(index, endIndex, hPainter);
 							occurences++;
-						}			
-					}
-					catch (BadLocationException e) {
+						}
+					} catch (BadLocationException e) {
 						// Nothing to do
 					}
 					index = endIndex;
@@ -310,27 +335,25 @@ public class LogAnalyzer extends JFrame{
 
 			@Override
 			public void removeUpdate(DocumentEvent arg0) {
-				if(searchField.getText().length()>=1){
+				if (searchField.getText().length() >= 1) {
 					occurences = 0;
 					logDisplay.getHighlighter().removeAllHighlights();
 					DefaultHighlighter highlighter = (DefaultHighlighter) logDisplay.getHighlighter();
 					DefaultHighlightPainter hPainter = new DefaultHighlightPainter(new Color(0xFFAA00));
-					DefaultStyledDocument doc = (DefaultStyledDocument)logDisplay.getDocument();
-					try{
+					DefaultStyledDocument doc = (DefaultStyledDocument) logDisplay.getDocument();
+					try {
 						context = doc.getText(0, doc.getLength());
-					}
-					catch (BadLocationException ex) {
+					} catch (BadLocationException ex) {
 						System.out.println(ex);
 					}
-					int index =0;
+					int index = 0;
 					int wordLength = searchField.getText().length();
-					while((index = context.indexOf(searchField.getText(), index))!= -1){
+					while ((index = context.indexOf(searchField.getText(), index)) != -1) {
 						int endIndex = index + wordLength;
-						try{
+						try {
 							highlighter.addHighlight(index, endIndex, hPainter);
 							occurences++;
-						}
-						catch (BadLocationException e) {
+						} catch (BadLocationException e) {
 							// Nothing to do
 						}
 						index = endIndex;
@@ -341,13 +364,16 @@ public class LogAnalyzer extends JFrame{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				} else {
+					logDisplay.getHighlighter().removeAllHighlights();
+					occurences = 0;
+					try {
+						logStat();
+					} catch (BadLocationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-				else{logDisplay.getHighlighter().removeAllHighlights();occurences=0;try {
-					logStat();
-				} catch (BadLocationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}}
 
 			}
 		});

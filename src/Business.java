@@ -1,4 +1,5 @@
-package v1;
+package src;
+
 import java.util.ArrayList;
 import java.io.File;
 import java.io.Serializable;
@@ -8,20 +9,20 @@ public class Business implements Serializable {
 	private String name;
 	private File logFile;
 	private File parseableLogFile;
-	
-	public Business(String name){
+
+	public Business(String name) {
 		rooms = new ArrayList<Room>();
 		this.name = name;
 	}
-	
-	public Business(String name,File log, File pLog){
+
+	public Business(String name, File log, File pLog) {
 		rooms = new ArrayList<Room>();
 		this.name = name;
 		logFile = log;
 		parseableLogFile = pLog;
 	}
-	
-	public Business(String name, ArrayList<Room> rooms, File log, File pLog){
+
+	public Business(String name, ArrayList<Room> rooms, File log, File pLog) {
 		this.rooms = rooms;
 		this.name = name;
 		logFile = log;
@@ -43,28 +44,25 @@ public class Business implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return name;
 	}
-	
-	public void setLogFile(File f){
+
+	public void setLogFile(File f) {
 		logFile = f;
 	}
-	
-	public File getFile(){
+
+	public File getFile() {
 		return logFile;
 	}
-	
-	public void setParseableLogFile(File f){
+
+	public void setParseableLogFile(File f) {
 		parseableLogFile = f;
 	}
-	
-	public File getParseableLogFile(){
+
+	public File getParseableLogFile() {
 		return parseableLogFile;
 	}
-	
-	
-	
 
 }
