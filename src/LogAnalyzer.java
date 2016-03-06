@@ -33,7 +33,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-
+//aaaaaaaaaaaaaaaaaaaaaaaaaaa
 public class LogAnalyzer extends JFrame {
 	private JPanel westPanel;
 	private JPanel northPanel;
@@ -90,6 +90,7 @@ public class LogAnalyzer extends JFrame {
 		originalRegText = logDisplay.getText();
 		this.pack();
 		this.setVisible(true);
+		/////asdfsadfasdf
 	}
 
 	private void makeWestPanel() {
