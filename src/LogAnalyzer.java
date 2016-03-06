@@ -179,7 +179,7 @@ public class LogAnalyzer extends JFrame {
 		sb.append("<b>Number of Rooms : </b>" + currentBusiness.getRooms().size()+"<br>");
 		sb.append("<b>Last Alarm Triggered : </b><br>");
 		sb.append("<b>Alarms Currently Triggered : </b><br>");
-		sb.append("<b>Last edit : </b>" + currentBusiness.getLastEdit()+"<br>");
+		sb.append("<b>Last edit : </b>" +"<span><style=\"font:8;color:pink;\">" + currentBusiness.getLastEdit()+"</span><br>");
 		logStats.setText(sb.toString());
 	}
 
