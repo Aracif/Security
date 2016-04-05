@@ -35,37 +35,25 @@ public class SystemConstructionPanelJList extends JPanel {
 
 		this.setLayout(new FlowLayout());
 
-		topFrame = fra; // reference to the frame for system creation so it can
-						// be closed
-		alarmsPanel = alarms; // reference to alarm panel
-		currentBusiness = bus; // current business object
-
+		topFrame = fra; 			
+		alarmsPanel = alarms; 
+		currentBusiness = bus; 
 		blackline = BorderFactory.createLineBorder(Color.decode("#00BFFF")); 
-
-		this.setBorder(BorderFactory.createTitledBorder(blackline, "Room List"));//
-
-		makeJList(); // Construct the JList panel
-
+		this.setBorder(BorderFactory.createTitledBorder(blackline, "Room List"));
+		makeJList(); 
 		JViewport consolePane = (JViewport) ((JScrollPane) conPanel.getPanel().getComponent(0)).getViewport(); 
 		consoleTextArea = (JTextPane) consolePane.getView();						
 		addRoomTextInput = (JTextField) inPanel.getComponent(0); 
-
 		listPane = (JScrollPane) this.getComponent(0); 
-
 		list = (JList<Room>) listPane.getViewport().getComponent(0); 
-	
 		listModel = (DefaultListModel<Room>) list.getModel(); 
-	
 		JPanel buttonPanel = (JPanel) this.getComponent(1); 
 		createRoomButton = (JButton) buttonPanel.getComponent(0); 
-
-		deleteRoomButton = (JButton) buttonPanel.getComponent(1); // Reference
-
-		backButton = (JButton) buttonPanel.getComponent(3); // Reference to the
-															// back JButton
-		editRoomButton = (JButton) buttonPanel.getComponent(2); // Reference to
-																// the edit
-																// JButton
+		deleteRoomButton = (JButton) buttonPanel.getComponent(1); 
+		backButton = (JButton) buttonPanel.getComponent(3); 												
+		editRoomButton = (JButton) buttonPanel.getComponent(2); 
+																
+																
 
 		addListeners(); // Add listeners
 		loadRoomList(); // Load the room list into JList model
