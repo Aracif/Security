@@ -46,26 +46,18 @@ public class SystemConstructionPanelJList extends JPanel {
 
 		makeJList(); // Construct the JList panel
 
+		//Get references to necessary JComponents
 		JViewport consolePane = (JViewport) ((JScrollPane) conPanel.getPanel().getComponent(0)).getViewport(); 
 		consoleTextArea = (JTextPane) consolePane.getView();						
 		addRoomTextInput = (JTextField) inPanel.getComponent(0); 
-
 		listPane = (JScrollPane) this.getComponent(0); 
-
 		list = (JList<Room>) listPane.getViewport().getComponent(0); 
-	
 		listModel = (DefaultListModel<Room>) list.getModel(); 
-	
 		JPanel buttonPanel = (JPanel) this.getComponent(1); 
 		createRoomButton = (JButton) buttonPanel.getComponent(0); 
-
-		deleteRoomButton = (JButton) buttonPanel.getComponent(1); // Reference
-
-		backButton = (JButton) buttonPanel.getComponent(3); // Reference to the
-															// back JButton
-		editRoomButton = (JButton) buttonPanel.getComponent(2); // Reference to
-																// the edit
-																// JButton
+		deleteRoomButton = (JButton) buttonPanel.getComponent(1); 
+		backButton = (JButton) buttonPanel.getComponent(3); 
+		editRoomButton = (JButton) buttonPanel.getComponent(2); 
 
 		addListeners(); // Add listeners
 		loadRoomList(); // Load the room list into JList model
@@ -150,8 +142,7 @@ public class SystemConstructionPanelJList extends JPanel {
 					writeString += "<b>Created on : </b>" + "<span style=\"color:rgb(0, 137, 178);font:14px;\">"
 							+ InformationDisplay.dateOfCreationFormatted() + " at "
 							+ InformationDisplay.timeOfCreationFormatted() + "</span><br><br>";
-					File currentFile = currentBusiness.getFile();
-					PrintWriter write = new PrintWriter(new BufferedWriter(new FileWriter(currentFile, true)));
+					PrintWriter write = new PrintWriter(new BufferedWriter(new FileWriter(currentBusiness.getFile(), true)));
 					write.write("\n\n");
 					write.write(writeString);
 					write.close();
