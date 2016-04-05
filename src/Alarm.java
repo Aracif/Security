@@ -2,19 +2,32 @@ package src;
 
 import java.io.Serializable;
 
-public class Alarm implements Serializable {
+public abstract class Alarm implements Serializable {
+	
 	private String name;
+	private int priority
 
-	public Alarm(String name) {
+	public Alarm(String name, int priority) {
 		this.name = name;
+		this.priority = priority;
 	}
 
-	protected String getName() {
+	public String getName() {
 		return name;
 	}
 
-	protected void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+	
+	public String gePriority() {
+		return priority;
+	}
+
+	public abstract String goesOff();
 
 }
