@@ -196,8 +196,8 @@ public class SystemConstructionPanelJList extends JPanel {
 		return alarms;
 	}
 	
-	//  Match the alarm or alarms with the JCheckBox by using 
-	//  the Switch statement
+	// Matching the alarm with 
+	// the JCheckBox by using Switch
 	private Alarm checkAlarm(String i)
 	{
 		Alarm al = null;
