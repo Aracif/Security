@@ -1,4 +1,4 @@
-package V1;
+package src;
 
 public class NoAlarm extends Alarm
 {
