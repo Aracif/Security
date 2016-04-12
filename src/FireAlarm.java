@@ -1,4 +1,4 @@
-package V1;
+package src;
 
 public class FireAlarm extends Alarm 
 {
@@ -24,3 +24,4 @@ public class FireAlarm extends Alarm
 	}
 	 
 }
+
