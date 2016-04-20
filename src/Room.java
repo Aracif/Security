@@ -42,6 +42,11 @@ public class Room implements Serializable {
 	protected void setRoomName(String roomName) {
 		this.roomName = roomName;
 	}
+	
+	protected void setRiskLevel(String riskLevel)
+	{
+		this.riskLevel = riskLevel;
+	}
 
 	public String toString() {
 		return roomName + "(" + riskLevel + ")";
