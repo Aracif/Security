@@ -5,12 +5,16 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.PrintWriter;
+import java.io.Reader;
+
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -28,6 +32,7 @@ public class SystemConstructionPanelJList extends JPanel {
 	private JList<Room> list;
 	private JTextField addRoomTextInput;
 	private JTextPane consoleTextArea;
+	File inputFile;
 
 	@SuppressWarnings("unchecked")
 	public SystemConstructionPanelJList(JPanel alarms, Business bus, SystemConstructionPanelInput inPanel,
@@ -66,7 +71,9 @@ public class SystemConstructionPanelJList extends JPanel {
 		editRoomButton = (JButton) buttonPanel.getComponent(2); // Reference to
 																// the edit
 																// JButton
-
+		
+		inputFile = currentBusiness.getFile();
+		
 		addListeners(); // Add listeners
 		loadRoomList(); // Load the room list into JList model
 	}
@@ -96,8 +103,24 @@ public class SystemConstructionPanelJList extends JPanel {
 		// DELETE BUTTON
 		deleteRoomButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				int selectedInd = list.getSelectedIndex();
 				Room currentRoom = listModel.getElementAt(selectedInd);
+				
+				try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(inputFile, true))))
+				{
+					writer.write("\n<br><br><b>*ROOM DELETION*</b>\n");
+					writer.write("<br><b>Room Name : </b>" + currentRoom.getRoomName());
+				} 
+				catch(FileNotFoundException e1)
+				{
+					e1.printStackTrace();
+				}
+				catch (IOException e1)
+				{
+					e1.printStackTrace();
+				}
+				
 				listModel.removeElementAt(selectedInd);
 				currentBusiness.getRooms().remove(currentRoom);
 			}
@@ -122,6 +145,32 @@ public class SystemConstructionPanelJList extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				topFrame.dispose();
 			}
+		});
+		// EDIT ROOM BUTTON
+		editRoomButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				Room currentRoom = list.getSelectedValue();
+				Alarm[] alarms = createSelectedAlarmsArray();
+				String riskLevel = createRiskStringFromPanel();
+				currentRoom.setAlarms(alarms);
+				currentRoom.setRiskLevel(riskLevel);
+				try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(inputFile, true))))
+				{
+					String statusText = "";
+
+					statusText += "<html><p><b>ROOM : </b>" + currentRoom.getRoomName() + "</p>";
+					statusText += "<p><b>RISK LEVEL : </b>" + currentRoom.getRiskLevel() + "</p>";
+					statusText += "<p><b>ALARMS : </b></p>";
+					statusText += InformationDisplay.getAlarmNames(alarms) + "\n";
+					
+					writer.write("\n<br><br><b>*ROOM EDIT*</b>\n");
+					writer.write(statusText);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
 		});
 		// ADD ROOM BUTTON
 		createRoomButton.addActionListener(new ActionListener() {
@@ -203,8 +252,8 @@ public class SystemConstructionPanelJList extends JPanel {
 		Alarm al = null;
 		switch(i)
 		{
-			case "No Alarm":
-				al = new NoAlarm ("No Alarm", 0);
+			case "Drill":
+				al = new NoAlarm ("Drill", 0);
 				break;
 			case "Chemical":
 				al = new ChemicalAlarm ("Chemical Alarm", 2);
