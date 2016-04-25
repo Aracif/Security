@@ -1,11 +1,11 @@
-package src;
+
 
 import java.io.Serializable;
 
 public abstract class Alarm implements Serializable {
 	
 	private String name;
-	private int priority
+	private int priority;
 
 	public Alarm(String name, int priority) {
 		this.name = name;
@@ -24,7 +24,7 @@ public abstract class Alarm implements Serializable {
 		this.priority = priority;
 	}
 	
-	public String gePriority() {
+	public int getPriority() {
 		return priority;
 	}
 

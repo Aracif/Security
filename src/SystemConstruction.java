@@ -1,4 +1,4 @@
-package src;
+
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -6,6 +6,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class SystemConstruction {
 	private GridBagLayout grid;
@@ -18,7 +19,7 @@ public class SystemConstruction {
 	private SystemConstructionConsole console;
 	private JFrame frame;
 
-	public SystemConstruction(Business busi, HomeWindowMain parentFrame) {
+	public SystemConstruction(Business busi, HomeWindowMain parentFrame) throws IOException {
 		frame = new JFrame("Room Construction");
 		frame.setTitle("Room Construction");
 		frame.setLayout(new GridLayout(2, 2));

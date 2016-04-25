@@ -1,4 +1,4 @@
-package src;
+
 
 public class ZombieAlarm extends Alarm 
 {

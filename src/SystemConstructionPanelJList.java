@@ -1,4 +1,4 @@
-package V1;
+
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -35,6 +35,8 @@ public class SystemConstructionPanelJList extends JPanel {
 	private JTextField addRoomTextInput;
 	private JTextPane consoleTextArea;
 	private File currentBusinessLogFile;
+	private String currentlySelectedRoomText;
+	private String businessNeading;
 
 	@SuppressWarnings("unchecked")
 	public SystemConstructionPanelJList(JPanel alarms, Business bus, SystemConstructionPanelInput inPanel,
@@ -60,7 +62,11 @@ public class SystemConstructionPanelJList extends JPanel {
 		deleteRoomButton = (JButton) buttonPanel.getComponent(1); 
 		backButton = (JButton) buttonPanel.getComponent(3); 														
 		editRoomButton = (JButton) buttonPanel.getComponent(2); 
-		currentBusinessLogFile = currentBusiness.getFile();																
+		currentBusinessLogFile = currentBusiness.getFile();	
+		currentlySelectedRoomText = " ";
+		businessNeading = "<b style=\"font:20;\">SECURITY LOG</b>" + " for "
+				+ "<span style=\"font:16;color:	rgb(255,165,0);text-decoration:underline;\">"
+				+ currentBusiness.getName() + "</span>";
 		addListeners(); 
 		loadRoomList();
 		
@@ -95,16 +101,21 @@ public class SystemConstructionPanelJList extends JPanel {
 		String text = "";
 		String newString = "";
 		while((currentLine = r.readLine())!=null){
-			if(currentLine.contains(s)){
-				newString = currentLine.replace(s, s + " TRIGGERED" );
-				System.out.println(newString);
-				text=newString;
-				return text;
-			}
-
+			if(currentLine.contains(currentlySelectedRoomText)){
+				while((newString = r.readLine())!=null){				
+					if(newString.contains(s)){					
+						String k = newString.replace(s, s + " TRIGGERED" );										
+						String formattedString = k.substring(k.indexOf(s),s.length()+14);
+						text=k;
+						r.close();					
+						return "<br> ->"+formattedString + "<br> \n";
+					}																			
+				}				
+			}		
 		}
-		System.out.println(text);
-		return currentLine;	
+		//System.out.println(text);
+		r.close();
+		return "";	
 	}
 
 
@@ -123,6 +134,8 @@ public class SystemConstructionPanelJList extends JPanel {
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				Room currentRoom = list.getSelectedValue();
+				currentlySelectedRoomText = currentRoom.getRoomName();
+				//System.out.println("Currently selected room: " + currentlySelectedRoomText );
 				if (currentRoom != null) {
 					String statusText = "";
 					statusText += "<html><p><b>ROOM : </b>" + currentRoom.getRoomName() + "</p>";
@@ -153,7 +166,7 @@ public class SystemConstructionPanelJList extends JPanel {
 				String riskLevel = createRiskStringFromPanel();
 				currentRoom.setAlarms(alarms);
 				currentRoom.setRiskLevel(riskLevel);
-				try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(inputFile, true))))
+				try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(currentBusinessLogFile, false))))
 				{
 					String statusText = "";
 
@@ -180,6 +193,7 @@ public class SystemConstructionPanelJList extends JPanel {
 			
 			public void actionPerformed(ActionEvent e)
 			{
+				String alarmTriggeredString = "";
 				Alarm[] a = createSelectedAlarmsArray();
 				int j = 0;
 				for (Alarm k = a[j]; k!=null; k = a[++j])
@@ -188,46 +202,90 @@ public class SystemConstructionPanelJList extends JPanel {
 					switch(k.getName())
 					{
 						case "Chemical Alarm":	
-							String s = wordSearch("Chemical Alarm", writer);							
-							writer.write(s);
-							writer.close();							
+							alarmTriggeredString += wordSearch("Chemical Alarm", writer) + "\n";							
+							//writer.write(s);														
 							popUp(k.goesOff());
+							
 							break;
 						case "Fire Alarm":
-							String t = wordSearch("Fire Alarm", writer);							
-							writer.write(t);
-							writer.close();	
+							alarmTriggeredString += wordSearch("Fire Alarm", writer) + "\n";							
+							//writer.write(t);						
 							popUp(k.goesOff());
+							
 							break;
 						case "Window Alarm":
-							String d = wordSearch("Window Alarm", writer);							
-							writer.write(d);
-							writer.close();	
+							alarmTriggeredString += wordSearch("Window Alarm", writer) + "\n";							
+							//writer.write(d);								
 							popUp(k.goesOff());
+							
 							break;
 						case"Door Alarm":
-							String h = wordSearch("Door Alarm", writer);							
-							writer.write(h);
-							writer.close();	
+							alarmTriggeredString += wordSearch("Door Alarm", writer) + "\n";							
+							//writer.write(h);
+								
 							popUp(k.goesOff());
 							break;
 						case "Flood Alarm":
-							String i = wordSearch("Flood Alarm", writer);							
-							writer.write(i);
-							writer.close();	
+							alarmTriggeredString += wordSearch("Flood Alarm", writer) + "\n";						
+							//writer.write(i);
+							
 							popUp(k.goesOff());
 							break;
 						case "Zombie Apocalypse":
-							String v = wordSearch("Zombie Alarm", writer);							
-							writer.write(v);
-							writer.close();	
+							alarmTriggeredString += wordSearch("Zombie Apocalypse", writer);							
+							//writer.write(v);
+							
 							popUp(k.goesOff());
 							break;
 					}
+					
 					}
 					catch(IOException y){
 						y.printStackTrace();
 					}
+				}
+				alarmTriggeredString = "<br>WARNING!!!<br> " + currentlySelectedRoomText + " room following alarms have been TRIPPED\n" + alarmTriggeredString;
+				alarmTriggeredString = "<span style=font:16;color:red;text-decoration:underline;>" + alarmTriggeredString + "</span>";
+				try{
+				if(LogAnalyzer.saveCounter>0){
+					String s;
+					String goodText = "";						
+					BufferedReader r = new BufferedReader(new FileReader(currentBusinessLogFile));
+					try {
+						while((s=r.readLine())!=null){
+							System.out.println(s);
+							if(s.contains("</html>")){
+								System.out.println("Found </html> tag");
+
+							}
+							else if(s.contains("<body>")){
+								System.out.println("Found <body> tag");
+							}
+							else if(s.contains("</body>")){
+								System.out.println("Found </body> tag");
+							}
+							else if(s.contains("<html>")){
+								System.out.println("Found <html> tag");
+							}
+							else{
+								goodText+= "\n" + s;
+							}
+							
+						}
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				
+					System.out.println(LogAnalyzer.saveCounter + "SAVE COUNTER");
+					PrintWriter write2 = new PrintWriter(new BufferedWriter(new FileWriter(currentBusinessLogFile, false)));
+					write2.write("<html>"+goodText + alarmTriggeredString + "</html>");
+					write2.close();
+				
+			}
+				}
+				catch(IOException r){
+					
 				}
 			}
 
@@ -236,7 +294,12 @@ public class SystemConstructionPanelJList extends JPanel {
 	
 		// ADD ROOM BUTTON
 		createRoomButton.addActionListener(new ActionListener() {
+			
+			
 			public void actionPerformed(ActionEvent e) {
+				try{
+				
+			
 				Alarm[] alarms = createSelectedAlarmsArray(); 
 				String riskLevel = createRiskStringFromPanel();
 				Room newRoom = new Room(addRoomTextInput.getText(), alarms, riskLevel); 
@@ -244,30 +307,64 @@ public class SystemConstructionPanelJList extends JPanel {
 				listModel.addElement(newRoom); 
 				String statusText = "";
 
-				statusText += "<html><p><b>ROOM : </b>" + newRoom.getRoomName() + "</p>";
-				statusText += "<p><b>RISK LEVEL : </b>" + newRoom.getRiskLevel() + "</p>";
-				statusText += "<p><b>ALARMS : </b></p>";
+				statusText += "<p><b>ROOM : </b>" + newRoom.getRoomName() + "</p>\n";				
+				statusText += "<p><b>RISK LEVEL : </b>" + newRoom.getRiskLevel() + "</p>\n";
+				statusText += "<p><b>ALARMS : </b></p>\n";
 				statusText += InformationDisplay.getAlarmNames(alarms) + "\n";
 				statusText += "<p><b>Creation Status </b></p>: <span style=\"color:Green\">Success</span> ";
 
 				consoleTextArea.setText("<b>Current Business : </b>" + currentBusiness.getName() + "\n" + statusText);
 
 				// Write info to the log file about this rooms creation
-				try {
+				
 					String writeString = "\n<br><br><b>*ROOM CREATION*</b>\n";
-					writeString += "<br><b>Room Name : </b>" + newRoom.getRoomName();
-					writeString += "<br><b>Risk Level : </b>" + newRoom.getRiskLevel();
-					writeString += "<br><b>Alarms : </b>" + InformationDisplay.getAlarmNames(alarms);
-					writeString += "<b>Created on : </b>" + "<span style=\"color:rgb(0, 137, 178);font:14px;\">"
+					writeString += "<br><b>Room Name : </b>\n" + newRoom.getRoomName();
+					writeString += "<br><b>Risk Level : </b>\n" + newRoom.getRiskLevel();
+					writeString += "<br><b>Alarms : </b>\n" + InformationDisplay.getAlarmNames(alarms);
+					writeString += "<b>Created on : </b>\n" + "<span style=\"color:rgb(0, 137, 178);font:14px;\">"
 							+ InformationDisplay.dateOfCreationFormatted() + " at "
 							+ InformationDisplay.timeOfCreationFormatted() + "</span><br><br>";
 					File currentFile = currentBusiness.getFile();
-					PrintWriter write = new PrintWriter(new BufferedWriter(new FileWriter(currentFile, true)));
+					PrintWriter write = new PrintWriter(new BufferedWriter(new FileWriter(currentBusinessLogFile, true)));
+					if(LogAnalyzer.saveCounter>0){
+						String s;
+						String goodText = "";						
+						BufferedReader r = new BufferedReader(new FileReader(currentBusinessLogFile));
+						while((s=r.readLine())!=null){
+							System.out.println(s);
+							if(s.contains("</html>")){
+								System.out.println("Found </html> tag");
+
+							}
+							else if(s.contains("<body>")){
+								System.out.println("Found <body> tag");
+							}
+							else if(s.contains("</body>")){
+								System.out.println("Found </body> tag");
+							}
+							else if(s.contains("<html>")){
+								System.out.println("Found <html> tag");
+							}
+							else{
+								goodText+= "\n" + s;
+							}
+							
+						}
+					
+						System.out.println(LogAnalyzer.saveCounter + "SAVE COUNTER");
+						PrintWriter write2 = new PrintWriter(new BufferedWriter(new FileWriter(currentBusinessLogFile, false)));
+						write2.write("<html>"+goodText + writeString + "<br></html>");
+						write2.close();
+					}
+					else{
 					write.write("\n\n");
 					write.write(writeString);
 					write.close();
 					addRoomTextInput.setText("");
-				} catch (FileNotFoundException c) {
+					}
+				}
+			
+				 catch (FileNotFoundException c) {
 					System.out.println(c);
 				} catch (IOException io) {
 					System.out.println(io);
@@ -275,6 +372,7 @@ public class SystemConstructionPanelJList extends JPanel {
 			}
 		});
 	}
+	
 
 	// iterate through risk panel and return string of the currently checked
 	// risk level

@@ -1,4 +1,4 @@
-package src;
+
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -17,7 +17,7 @@ public class HomeWindowMainTitle extends JPanel {
 
 	private void makeTitle() {
 		JLabel title = new JLabel(
-				"<html>Welcome to Security Systems Inc <br> Keeping you safe now, and  in the future.</html>");
+				"<html>Welcome to ACME Security Systems Inc <br> Keeping you safe since 2016.</html>");
 		title.setFont(new Font("Monospaced", Font.PLAIN, 25));
 		title.setForeground(Color.BLACK);
 		this.add(title);

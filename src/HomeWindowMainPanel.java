@@ -1,4 +1,4 @@
-package src;
+
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -184,7 +184,12 @@ public class HomeWindowMainPanel extends JPanel implements Serializable {
 				JList list = (JList) comp[0];
 				Object currentSelection = list.getSelectedValue();
 				if (currentSelection != null) {
-					SystemConstruction win = new SystemConstruction((Business) currentSelection, parentFrame);
+					try {
+						SystemConstruction win = new SystemConstruction((Business) currentSelection, parentFrame);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		});

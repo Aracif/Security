@@ -1,4 +1,4 @@
-package src;
+
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -63,6 +63,7 @@ public class LogAnalyzer extends JFrame {
 	private int occurences;
 	private String originalDocText;
 	private String originalRegText;
+	protected static int saveCounter = 0;
 
 	public LogAnalyzer(JFrame parentFrame, Business cB) throws IOException, BadLocationException {
 		this.getContentPane().setLayout(new BorderLayout());
@@ -88,6 +89,9 @@ public class LogAnalyzer extends JFrame {
 		getWordCount();
 		originalDocText = logDisplay.getDocument().getText(0, logDisplay.getDocument().getLength());
 		originalRegText = logDisplay.getText();
+		//System.out.println(originalDocText);
+		//System.out.println(originalRegText);
+		this.repaint();
 		this.pack();
 		this.setVisible(true);
 	}
@@ -162,6 +166,7 @@ public class LogAnalyzer extends JFrame {
 
 	// Read the html based log display into the JTextPane
 	private void readInFile() throws IOException {
+		read = new BufferedReader(new FileReader(currentLogFile));
 		String currentLine;
 		String text = "";
 		while ((currentLine = read.readLine()) != null) {
@@ -173,7 +178,7 @@ public class LogAnalyzer extends JFrame {
 	// Log stats
 	private void logStat() throws BadLocationException {
 		StringBuffer sb = new StringBuffer();
-		sb.append("<b>Leafs : </b> " + getWordCount() + "<br>");
+		sb.append("<b>Words : </b> " + getWordCount() + "<br>");
 		sb.append("<b>Occurences : </b> " + occurences + "<br>");
 		sb.append("<b>Tripped Alarms : </b> <br>");
 		sb.append("<b>Number of Rooms : </b>" + currentBusiness.getRooms().size()+"<br>");
@@ -279,20 +284,25 @@ public class LogAnalyzer extends JFrame {
 				} else {
 					int choice = JOptionPane.showConfirmDialog(currentFrame,
 							"Are you sure you want to save these changes?");
-					System.out.println(choice + "");
+					
 					if(choice==0){
-						PrintWriter pw = new PrintWriter(currentBusiness.getFile().getAbsolutePath());
-						File updateTextFile = new File(currentBusiness.getFile().getAbsolutePath());
-						currentBusiness.setLogFile(updateTextFile);
-						pw.write(currentDocText);
-						pw.close();
+						PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(currentBusiness.getFile(),false)));
+						writer.write(currentDocText);
+						//currentBusiness.setLogFile(updateTextFile);
+						//pw.write(currentDocText);
+						writer.close();
 						currentBusiness.setLastEdit(InformationDisplay.dateOfCreationFormatted() + " @ " + 
 						InformationDisplay.timeOfCreationFormatted());
 						logStat();
+						saveCounter++;
+						
 						
 					}
 				}
 			} catch (  FileNotFoundException | BadLocationException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 

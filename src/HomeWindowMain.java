@@ -1,4 +1,4 @@
-package src;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +10,7 @@ public class HomeWindowMain extends JFrame {
 		GridLayout grid = new GridLayout(2, 1);
 		this.setLayout(grid);
 		this.setOpacity(1.0f);
-		this.setTitle("Security Systems Inc.");
+		this.setTitle("ACME SECURITY Inc.");
 		this.setBackground(Color.white);
 		this.pack();
 		this.setSize(800, 600);

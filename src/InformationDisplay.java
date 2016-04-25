@@ -1,4 +1,4 @@
-package src;
+
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -10,9 +10,9 @@ public class InformationDisplay {
 		String buildString = "";
 		for (int i = 0; i <= alarms.length - 1 && alarms[i] != null; i++) {
 			Alarm currentAlarm = alarms[i];
-			buildString += "<li>" + currentAlarm.getName() + "</li>";
+			buildString += "<li>" + currentAlarm.getName() + "</li>\n";
 		}
-		return "<ul>" + buildString + "</ul>";
+		return "<ul>\n" + buildString + "</ul>";
 	}
 
 	public static String roomName(Room r) {
