@@ -6,7 +6,11 @@ public abstract class Alarm implements Serializable {
 	
 	private String name;
 	private int priority;
-
+	/**
+	 * 
+	 * @param name
+	 * @param priority
+	 */
 	public Alarm(String name, int priority) {
 		this.name = name;
 		this.priority = priority;
