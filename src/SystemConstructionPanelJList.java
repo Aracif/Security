@@ -244,7 +244,7 @@ public class SystemConstructionPanelJList extends JPanel {
 						y.printStackTrace();
 					}
 				}
-				alarmTriggeredString = "<br>WARNING!!!<br> " + currentlySelectedRoomText + " room following alarms have been TRIPPED\n" + alarmTriggeredString;
+				alarmTriggeredString = "<br><br><br><br>WARNING!!!<br> " + currentlySelectedRoomText + " room alarms have been TRIPPED\n" + alarmTriggeredString;
 				alarmTriggeredString = "<span style=font:16;color:red;text-decoration:underline;>" + alarmTriggeredString + "</span>";
 				try{
 				if(LogAnalyzer.saveCounter>0){
@@ -282,7 +282,14 @@ public class SystemConstructionPanelJList extends JPanel {
 					write2.write("<html>"+goodText + alarmTriggeredString + "</html>");
 					write2.close();
 				
-			}
+			}	
+				else{
+					System.out.println("In else");
+					BufferedReader r = new BufferedReader(new FileReader(currentBusinessLogFile));
+					PrintWriter write2 = new PrintWriter(new BufferedWriter(new FileWriter(currentBusinessLogFile, true)));
+					write2.write(alarmTriggeredString);
+					write2.close();
+				}
 				}
 				catch(IOException r){
 					
@@ -307,7 +314,7 @@ public class SystemConstructionPanelJList extends JPanel {
 				listModel.addElement(newRoom); 
 				String statusText = "";
 
-				statusText += "<p><b>ROOM : </b>" + newRoom.getRoomName() + "</p>\n";				
+				statusText += "<p><p><b>ROOM : </b>" + newRoom.getRoomName() + "</p>\n";				
 				statusText += "<p><b>RISK LEVEL : </b>" + newRoom.getRiskLevel() + "</p>\n";
 				statusText += "<p><b>ALARMS : </b></p>\n";
 				statusText += InformationDisplay.getAlarmNames(alarms) + "\n";
@@ -317,13 +324,13 @@ public class SystemConstructionPanelJList extends JPanel {
 
 				// Write info to the log file about this rooms creation
 				
-					String writeString = "\n<br><br><b>*ROOM CREATION*</b>\n";
+					String writeString = "\n<br><br><br><br><b>*ROOM CREATION*</b>\n";
 					writeString += "<br><b>Room Name : </b>\n" + newRoom.getRoomName();
 					writeString += "<br><b>Risk Level : </b>\n" + newRoom.getRiskLevel();
 					writeString += "<br><b>Alarms : </b>\n" + InformationDisplay.getAlarmNames(alarms);
 					writeString += "<b>Created on : </b>\n" + "<span style=\"color:rgb(0, 137, 178);font:14px;\">"
 							+ InformationDisplay.dateOfCreationFormatted() + " at "
-							+ InformationDisplay.timeOfCreationFormatted() + "</span><br><br>";
+							+ InformationDisplay.timeOfCreationFormatted() + "</span><br><br><br><br><br><br><br></p>";
 					File currentFile = currentBusiness.getFile();
 					PrintWriter write = new PrintWriter(new BufferedWriter(new FileWriter(currentBusinessLogFile, true)));
 					if(LogAnalyzer.saveCounter>0){
