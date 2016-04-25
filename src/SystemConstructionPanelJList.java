@@ -324,13 +324,14 @@ public class SystemConstructionPanelJList extends JPanel {
 
 				// Write info to the log file about this rooms creation
 				
-					String writeString = "\n<br><br><br><br><b>*ROOM CREATION*</b>\n";
+					String writeString = "<br><br><br><br><br><br><b>*ROOM CREATION*</b>\n";
 					writeString += "<br><b>Room Name : </b>\n" + newRoom.getRoomName();
 					writeString += "<br><b>Risk Level : </b>\n" + newRoom.getRiskLevel();
 					writeString += "<br><b>Alarms : </b>\n" + InformationDisplay.getAlarmNames(alarms);
 					writeString += "<b>Created on : </b>\n" + "<span style=\"color:rgb(0, 137, 178);font:14px;\">"
 							+ InformationDisplay.dateOfCreationFormatted() + " at "
 							+ InformationDisplay.timeOfCreationFormatted() + "</span><br><br><br><br><br><br><br></p>";
+					writeString += "\n\n";
 					File currentFile = currentBusiness.getFile();
 					PrintWriter write = new PrintWriter(new BufferedWriter(new FileWriter(currentBusinessLogFile, true)));
 					if(LogAnalyzer.saveCounter>0){

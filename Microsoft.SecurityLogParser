@@ -1,5 +1,7 @@
 SECURITY LOG for Microsoft 
  
+ 
+ 
 *ROOM CREATION* 
 Room Name : Bills Office 
 Risk Level : High Risk 
@@ -10,58 +12,69 @@ Window Alarm
 Door Alarm
 Flood Alarm
 Zombie Apocalypse
-Created on : April 24, 2016 at 10:30:28 PM 
+Created on : April 24, 2016 at 10:52:08 PM 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  
 *ROOM CREATION* 
-Room Name : Server Room A 
+Room Name : Vault 
+Risk Level : High Risk 
+Alarms : 
+Door Alarm
+Created on : April 24, 2016 at 10:52:16 PM 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+*ROOM CREATION* 
+Room Name : Server Room B 
 Risk Level : High Risk 
 Alarms : 
 Fire Alarm
 Door Alarm
 Flood Alarm
-Created on : April 24, 2016 at 10:30:49 PM 
+Created on : April 24, 2016 at 10:52:26 PM 
+ 
+ 
+ 
  
  
  
  
 *ROOM CREATION* 
-Room Name : Cefteria A 
+Room Name : Server C 
+Risk Level : No Risk 
+Alarms : 
+No Alarm
+Created on :  
+ 
+ 
+ 
+*ROOM CREATION* 
+Room Name : Cefteria 
 Risk Level : Low Risk 
 Alarms : 
 Chemical Alarm
 Fire Alarm
-Door Alarm
-Flood Alarm
-Created on :  
- 
-*ROOM CREATION* 
-Room Name : Server Room C 
-Risk Level : High Risk 
-Alarms : 
-Chemical Alarm
-Fire Alarm
-Window Alarm
-Door Alarm
-Flood Alarm
-Zombie Apocalypse
-Created on :  
-WARNING!!! 
-Server Room C room alarms have been TRIPPED 
-->Flood Alarm TRIGGERED 
- 
-WARNING!!! 
-Bills Office room alarms have been TRIPPED 
-->Door Alarm TRIGG 
+Created on : April 24, 2016 at 10:56:26 PM 
  
  
-*ROOM CREATION* 
-Room Name : Service Room 
-Risk Level : High Risk 
-Alarms : 
-Door Alarm
-Created on : April 24, 2016 at 10:34:00 PM 
+ 
+ 
+ 
  
  
 
