@@ -150,12 +150,12 @@ public class HomeWindowMainPanel extends JPanel implements Serializable {
 							+ busi.getName() + "</span>"); 
 															
 					write.close();
-					String businessLogFileString = System.getProperty("user.dir") + "\\" + busi.getName()
+					String businessLogFileString =  busi.getName()
 							+ ".SecurityLog"; 
 												
 					File businessLogFileFile = new File(businessLogFileString); 
-					String logParseFileString = System.getProperty("user.dir") + "\\" + busi.getName()
-							+ ".SecurityLogParser";
+					String logParseFileString =  busi.getName()
+							+ ".Printable";
 					File logParseFile = new File(logParseFileString);
 					busi.setLogFile(businessLogFileFile); 
 
