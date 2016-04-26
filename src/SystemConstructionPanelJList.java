@@ -134,7 +134,6 @@ public class SystemConstructionPanelJList extends JPanel {
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				Room currentRoom = list.getSelectedValue();
-				currentlySelectedRoomText = currentRoom.getRoomName();
 				//System.out.println("Currently selected room: " + currentlySelectedRoomText );
 				if (currentRoom != null) {
 					String statusText = "";
