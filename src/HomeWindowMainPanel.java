@@ -20,22 +20,44 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.lang.ClassNotFoundException;
 import java.io.FileNotFoundException;
-
+/***
+ * 
+ * Main Window Panel is responsible for holding an Array of component
+ * and will implement serializable to save its state
+ *
+ */
 public class HomeWindowMainPanel extends JPanel implements Serializable {
+	// An array of JComponent
 	private JComponent[] comp;
+	// Collection of Business 
 	private DefaultListModel<Business> model;
+	// Declare the home main window
 	private HomeWindowMain parentFrame;
 
+	/**
+	 * Constructor takes on parameter
+	 * @param parentFrame set the frame using HomeMainWindow class
+	 */
 	public HomeWindowMainPanel(HomeWindowMain parentFrame) {
+		// initialize the collection of business
 		model = new DefaultListModel<Business>();
+		// initialize the array of JComponent
 		comp = new JComponent[10];
+		// Set lay out for the main window panel
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		// Set the frame using the setting in Home Main Window
 		this.parentFrame = parentFrame;
 		addJList();
+		// invoke buttonPanel method
 		buttonPanel();
+		// invoke the addListener method
 		addListeners();
 	}
 
+	/**
+	 * Method to add the the list of Business
+	 * Setting the Border for the JList  and make it is list Scroll
+	 */
 	private void addJList() {
 		GridBagConstraints c = new GridBagConstraints();
 		JList<Business> j = new JList<>(model);
@@ -48,6 +70,11 @@ public class HomeWindowMainPanel extends JPanel implements Serializable {
 		comp[0] = j;
 	}
 
+	/**
+	 * Method is adding the all the Button to the main window 
+	 * First initialize it and put it into an array
+	 * Afterward add each and individual to the panel
+	 */
 	private void buttonPanel() {
 		JPanel buttonPanel = new JPanel(new FlowLayout());
 		buttonPanel.setSize(200, 300);
@@ -76,6 +103,11 @@ public class HomeWindowMainPanel extends JPanel implements Serializable {
 		this.add(textInputPanel());
 	}
 
+	/**
+	 * A blank panel will display business name after entering it
+	 * 
+	 * @return the text JPanel that contains the business name and the text field
+	 */
 	private JPanel textInputPanel() {
 		JPanel p = new JPanel(new FlowLayout());
 		JTextField name = new JTextField(30);
@@ -86,6 +118,10 @@ public class HomeWindowMainPanel extends JPanel implements Serializable {
 		return p;
 	}
 
+	/**
+	 * Method to add all of the listeners will be used in the main window
+	 * It contains load, save, add, delete, select, exit, and load buttons.
+	 */
 	private void addListeners() {
 		// LOAD BUTTON
 		JButton loadButton = (JButton) comp[3];
