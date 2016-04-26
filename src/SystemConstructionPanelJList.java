@@ -125,6 +125,22 @@ public class SystemConstructionPanelJList extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				int selectedInd = list.getSelectedIndex();
 				Room currentRoom = listModel.getElementAt(selectedInd);
+				try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(currentBusinessLogFile, true))))
+				{
+					String statusText = "";
+
+					statusText += "<html><p><b>ROOM : </b>" + currentRoom.getRoomName() + "</p>";
+					statusText += "<p><b>RISK LEVEL : </b>" + currentRoom.getRiskLevel() + "</p>";
+					statusText += "<p><b>ALARMS : </b></p>";
+					statusText += InformationDisplay.getAlarmNames(currentRoom.getAlarms()) + "\n";
+					
+					writer.write("\n<br><br><b>*ROOM DELETION*</b>\n");
+					writer.write(statusText);
+				}
+				catch (Exception e1)
+				{
+					e1.printStackTrace();
+				}
 				listModel.removeElementAt(selectedInd);
 				currentBusiness.getRooms().remove(currentRoom);
 			}
@@ -165,7 +181,7 @@ public class SystemConstructionPanelJList extends JPanel {
 				String riskLevel = createRiskStringFromPanel();
 				currentRoom.setAlarms(alarms);
 				currentRoom.setRiskLevel(riskLevel);
-				try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(currentBusinessLogFile, false))))
+				try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(currentBusinessLogFile, true))))
 				{
 					String statusText = "";
 
