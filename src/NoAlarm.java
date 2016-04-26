@@ -1,4 +1,9 @@
-
+/**
+ * 
+ * Drill Alarm class
+ * Subclass of Alarm class
+ *
+ */
 
 public class NoAlarm extends Alarm
 {
@@ -8,11 +13,17 @@ public class NoAlarm extends Alarm
 		
 	}
 
+	/**
+	 * @return the name of Drill Alarm class
+	 */
 	public String getName() 
 	{
 		return super.getName();
 	}
 	
+	/**
+	 * @return a string of message telling the name of which alarm is going off
+	 */
 	public String goesOff() 
 	{
 		String alert;
