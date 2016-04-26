@@ -113,7 +113,6 @@ public class SystemConstructionPanelJList extends JPanel {
 				}				
 			}		
 		}
-		//System.out.println(text);
 		r.close();
 		return "";	
 	}
@@ -150,8 +149,9 @@ public class SystemConstructionPanelJList extends JPanel {
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				Room currentRoom = list.getSelectedValue();
-				//System.out.println("Currently selected room: " + currentlySelectedRoomText );
+				//System.out.println("Currently selected room: " + currentlySelectedRoomText );				
 				if (currentRoom != null) {
+					currentlySelectedRoomText = currentRoom.getRoomName();
 					String statusText = "";
 					statusText += "<html><p><b>ROOM : </b>" + currentRoom.getRoomName() + "</p>";
 					statusText += "<p><b>RISK LEVEL : </b>" + currentRoom.getRiskLevel() + "</p>";
@@ -292,14 +292,14 @@ public class SystemConstructionPanelJList extends JPanel {
 						e1.printStackTrace();
 					}
 				
-					System.out.println(LogAnalyzer.saveCounter + "SAVE COUNTER");
+					
 					PrintWriter write2 = new PrintWriter(new BufferedWriter(new FileWriter(currentBusinessLogFile, false)));
 					write2.write("<html>"+goodText + alarmTriggeredString + "</html>");
 					write2.close();
 				
 			}	
 				else{
-					System.out.println("In else");
+					
 					BufferedReader r = new BufferedReader(new FileReader(currentBusinessLogFile));
 					PrintWriter write2 = new PrintWriter(new BufferedWriter(new FileWriter(currentBusinessLogFile, true)));
 					write2.write(alarmTriggeredString);
