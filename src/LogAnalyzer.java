@@ -33,7 +33,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-
+/**
+ * 
+ * GUI for the log analyzer with information
+ * such as business name, room name, alarm, date, time, vice versa 
+ *
+ */
 public class LogAnalyzer extends JFrame {
 	private JPanel westPanel;
 	private JPanel northPanel;
@@ -65,6 +70,10 @@ public class LogAnalyzer extends JFrame {
 	private String originalRegText;
 	protected static int saveCounter = 0;
 
+	/**
+	 * 
+	 * Constructor the log analyzer GUI
+	 */
 	public LogAnalyzer(JFrame parentFrame, Business cB) throws IOException, BadLocationException {
 		this.getContentPane().setLayout(new BorderLayout());
 		occurences = 0;
@@ -96,6 +105,9 @@ public class LogAnalyzer extends JFrame {
 		this.setVisible(true);
 	}
 
+	/**
+	 * Creating the west panel and what goes into it
+	 */
 	private void makeWestPanel() {
 		back = new JButton("Back");
 		back.addActionListener(backButtonAction);
@@ -135,12 +147,18 @@ public class LogAnalyzer extends JFrame {
 		addListeners();
 	}
 
+	/**
+	 * Creating the north panel and goes into it
+	 */
 	private void makeNorthPanel() {
 		northPanel = new JPanel(new FlowLayout());
 		northPanel.setBorder(BorderFactory.createLineBorder(new Color(0, 45, 235), 2, true));
 		currentFrame.add(northPanel, BorderLayout.NORTH);
 	}
 
+	/**
+	 * Creating the south panel and what goes ino it
+	 */
 	private void makeSouthPanel() {
 		southPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		labelName = new JLabel("Status/Info: ");
@@ -151,6 +169,9 @@ public class LogAnalyzer extends JFrame {
 		currentFrame.add(southPanel, BorderLayout.SOUTH);
 	}
 
+	/**
+	 * Creating the center panel and what goes into it
+	 */
 	private void makeCenterPanel() {
 		centerPanel = new JPanel(new FlowLayout());
 		centerPanel.setBorder(BorderFactory.createLineBorder(new Color(0, 65, 205), 2, true));
@@ -164,7 +185,10 @@ public class LogAnalyzer extends JFrame {
 		currentFrame.add(centerPanel, BorderLayout.CENTER);
 	}
 
-	// Read the html based log display into the JTextPane
+	/**
+	 *  Read the html based log display into the JTextPane
+	 * 
+	 */
 	private void readInFile() throws IOException {
 		read = new BufferedReader(new FileReader(currentLogFile));
 		String currentLine;
@@ -175,7 +199,10 @@ public class LogAnalyzer extends JFrame {
 		logDisplay.setText(text);
 	}
 
-	// Log stats
+	/**
+	 * Log information after everything has recorded
+	 * 
+	 */
 	private void logStat() throws BadLocationException {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<b>Words : </b> " + getWordCount() + "<br>");
@@ -188,11 +215,19 @@ public class LogAnalyzer extends JFrame {
 		logStats.setText(sb.toString());
 	}
 
-	// Set occurences
+	/**
+	 *  Set occurences
+	 * 
+	 */
 	private void setOccur(int i) {
 		occurences = i;
 	}
 
+	/**
+	 * 
+	 * Helping for the search bar to search the key word
+	 * It will count the space
+	 */
 	private int getWordCount() throws BadLocationException {
 		String logText = logDisplay.getText();
 		int spaces = 0;
@@ -207,24 +242,27 @@ public class LogAnalyzer extends JFrame {
 		return arr.length - spaces;
 	}
 
-	// The original log file is formatted using html, thus in order to get a
-	// regularly formatted document
-	// containing plain text only and formatted with words,lines,spaces etc in
-	// their proper positions we
-	// must parse through the html to find the text by checking if it is a leaf
-	// element in other words if
-	// the element represents text i.e. doesn't have any children. Now, in
-	// order, this method works as follows
-	// 1. Create a PrintWriter so we can write the parsed text into a file.
-	// 2. Get the currently displayed text in the JTextPane
-	// 3. Since we need to make an HTML document we first create an
-	// HTMLEditorKit which provides a method for this.
-	// 4. Now we can use the HTMLEditorKit method .createDefaultDocument to
-	// create the document model for this editor
-	// 5. We are now ready to read our JTextPane text into our HtmlEditorKit
-	// which stores it in the HTMLDocument we created for it
-	// 6. The final step before iteration is to create an element iterator which
-	// detects html elements in the Document model.
+	/**
+	 *  The original log file is formatted using html, thus in order to get a
+	 * 
+	 * regularly formatted document
+	 * containing plain text only and formatted with words,lines,spaces etc in
+	 * their proper positions we
+	 * must parse through the html to find the text by checking if it is a leaf
+	 * element in other words if
+	 * the element represents text i.e. doesn't have any children. Now, in
+	 * order, this method works as follows
+	 * 1. Create a PrintWriter so we can write the parsed text into a file.
+	 * 2. Get the currently displayed text in the JTextPane
+	 * 3. Since we need to make an HTML document we first create an
+	 * HTMLEditorKit which provides a method for this.
+	 * 4. Now we can use the HTMLEditorKit method .createDefaultDocument to
+	 * create the document model for this editor
+	 * 5. We are now ready to read our JTextPane text into our HtmlEditorKit
+	 * which stores it in the HTMLDocument we created for it
+ 	 * 6. The final step before iteration is to create an element iterator which
+	 *detects html elements in the Document model.
+	**/
 	private void parseJPane() throws IOException {
 		PrintWriter writeParseableSecurityLog = new PrintWriter(
 				new BufferedWriter(new FileWriter(currentBusiness.getParseableLogFile(), false)));
@@ -265,7 +303,9 @@ public class LogAnalyzer extends JFrame {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * Creating the action listener for the back button
+	 */
 	ActionListener backButtonAction = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -273,7 +313,9 @@ public class LogAnalyzer extends JFrame {
 		}
 	};
 
-	// Create the action to be performed when the save button is clicked
+	/**
+	 *  Create the action to be performed when the save button is clicked
+	 */
 	ActionListener saveButton = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -309,6 +351,9 @@ public class LogAnalyzer extends JFrame {
 		}
 	};
 
+	/**
+	 * Add all of the action listenres button
+	 */
 	private void addListeners() {
 
 		edit.addActionListener(new ActionListener() {

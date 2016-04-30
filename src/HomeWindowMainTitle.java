@@ -7,6 +7,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javafx.*;
 
+/**
+ * 
+ * GUI displaying the title for the main project
+ *
+ */
 public class HomeWindowMainTitle extends JPanel {
 
 	public HomeWindowMainTitle() {
@@ -15,6 +20,9 @@ public class HomeWindowMainTitle extends JPanel {
 		makeTitle();
 	}
 
+/**
+ * Displaying the title for Security
+ */
 	private void makeTitle() {
 		JLabel title = new JLabel(
 				"<html>Welcome to ACME Security Systems Inc <br> Keeping you safe since 2016.</html>");

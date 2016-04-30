@@ -19,6 +19,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * 
+ * Putting every panel in the Constructor GUI together
+ *
+ */
 public class SystemConstructionPanelJList extends JPanel {
 	private Border blackline;
 	private JFrame topFrame;
@@ -39,6 +44,9 @@ public class SystemConstructionPanelJList extends JPanel {
 	private String businessNeading;
 
 	@SuppressWarnings("unchecked")
+	/**
+	 * The constructor of this class
+	 */
 	public SystemConstructionPanelJList(JPanel alarms, Business bus, SystemConstructionPanelInput inPanel,
 			SystemConstructionConsole conPanel, JFrame fra) throws IOException {
 
@@ -72,6 +80,10 @@ public class SystemConstructionPanelJList extends JPanel {
 		
 	}
 
+	/**
+	 * Creating the buttons for add room -- delete room etc
+	 * 
+	 */
 	private void makeJList() {
 		DefaultListModel<Room> model = new DefaultListModel<Room>();
 		JList<Room> list = new JList<Room>(model);
@@ -93,8 +105,9 @@ public class SystemConstructionPanelJList extends JPanel {
 		this.add(buttonPanel);
 	}
 	
-	// A method to write and save the log of the trigger button
-	// Not a full version but it works the way we want
+	/**
+	 *  A method to write and save the log of the trigger button
+	 */
 	public String wordSearch(String s, PrintWriter bw) throws IOException {
 		BufferedReader r = new BufferedReader(new FileReader(currentBusinessLogFile));
 		String currentLine;
@@ -118,6 +131,10 @@ public class SystemConstructionPanelJList extends JPanel {
 	}
 
 
+	/**
+	 * 
+	 * Creating action listerner for every buttons in the Contructor GUI
+	 */
 	private void addListeners() throws IOException {
 		// DELETE BUTTON
 		deleteRoomButton.addActionListener(new ActionListener() {
@@ -397,8 +414,10 @@ public class SystemConstructionPanelJList extends JPanel {
 	}
 	
 
-	// iterate through risk panel and return string of the currently checked
-	// risk level
+	/**
+	 *  iterate through risk panel and return string of the currently checked
+	 *	@return risk level
+	 **/
 	private String createRiskStringFromPanel() {
 		String riskLevel = "";
 		JPanel panelArray2 = (JPanel) alarmsPanel.getComponent(1);
@@ -412,7 +431,10 @@ public class SystemConstructionPanelJList extends JPanel {
 		return riskLevel;
 	}
 
-	// Create the alarms array for the current room to be built
+	/**
+	 *  Create the alarms array for the current room to be built
+	 * @return the alarms that built in the current room
+	 */
 	private Alarm[] createSelectedAlarmsArray() {
 		Alarm[] alarms = new Alarm[7];
 		JPanel panelArray = (JPanel) alarmsPanel.getComponent(0);
@@ -428,9 +450,10 @@ public class SystemConstructionPanelJList extends JPanel {
 		return alarms;
 	}
 	
-	// Method [to be used in createSelectedAlarmsArray()] checking the name of the the alarms
-	// If the box/boxes [ that is/are checked ] is matching the case/cases
-	// It will create that alarm
+	/** Method [to be used in createSelectedAlarmsArray()] checking the name of the the alarms
+	  * If the box/boxes [ that is/are checked ] is matching the case/cases
+	  *It will create that alarm
+	  **/
 	private Alarm checkAlarm(String i)
 	{
 		Alarm al = null;
@@ -462,8 +485,9 @@ public class SystemConstructionPanelJList extends JPanel {
 		return al;
 	}
 	
-	// Method [will be used in the trigger button] that passes a String
-	// Which will create a message dialog [ invoke the goesOff() method ] 
+	/** Method [will be used in the trigger button] that passes a String
+	  * Which will create a message dialog [ invoke the goesOff() method ] 
+	  */
 	public void popUp(String i)
 	{
 		JOptionPane.showMessageDialog(topFrame, i);

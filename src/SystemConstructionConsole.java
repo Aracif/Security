@@ -8,10 +8,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * 
+ * Console for the GUI Constuctor
+ *
+ */
 public class SystemConstructionConsole extends JPanel {
 	private FlowLayout lay;
 	private JComponent[] comp;
 
+	/**
+	 * Constructor for the console GUI
+	 */
 	public SystemConstructionConsole() {
 		this.setLayout(new FlowLayout());
 		Border b = BorderFactory.createLineBorder(Color.decode("#00BFFF"), 1, true);
@@ -21,6 +29,9 @@ public class SystemConstructionConsole extends JPanel {
 		createConsole();
 	}
 
+	/**
+	 * Creating the console GUI
+	 */
 	private void createConsole() {
 		JTextPane status = new JTextPane();
 		status.setContentType("text/html");

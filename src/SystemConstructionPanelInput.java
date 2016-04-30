@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class SystemConstructionPanelInput extends JPanel {
 	private Border blackline;
 	private FlowLayout lay;

@@ -7,7 +7,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
+/**
+ * 
+ * GUI of construction of a room by adding alamrs and risks to it
+ *
+ */
 public class SystemConstruction {
 	private GridBagLayout grid;
 	private JComponent[] comp;
@@ -19,6 +23,12 @@ public class SystemConstruction {
 	private SystemConstructionConsole console;
 	private JFrame frame;
 
+	/**
+	 * 
+	 * Constructor for construction GUI
+	 * 
+	 * 
+	 */
 	public SystemConstruction(Business busi, HomeWindowMain parentFrame) throws IOException {
 		frame = new JFrame("Room Construction");
 		frame.setTitle("Room Construction");
@@ -49,6 +59,10 @@ public class SystemConstruction {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * 
+	 * Creating the panel that has the Alarm panel and Risk Panel
+	 */
 	private JPanel alarmConstruction() {
 		JPanel p = new JPanel();
 		Border b = BorderFactory.createLineBorder(Color.decode("#00BFFF"), 1, true);

@@ -7,11 +7,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * 
+ * Creating the panel for the Alarms
+ *
+ */
 public class SystemConstructionPanelAlarms extends JPanel {
 	private Border blackline;
 	private FlowLayout lay;
 	private JComponent[] comp;
 
+	/**
+	 * Constructor the panel of Alarms
+	 */
 	public SystemConstructionPanelAlarms() {
 		comp = new JComponent[7];
 		blackline = BorderFactory.createLineBorder(Color.decode("#00BFFF"));
@@ -22,6 +30,10 @@ public class SystemConstructionPanelAlarms extends JPanel {
 		radioButtons();
 	}
 
+	/**
+	 * Creating the JButton for each individual alarm 
+	 * Put them into an component array
+	 */
 	private void radioButtons() {
 
 		JCheckBox none = new JCheckBox("No Alarm");
